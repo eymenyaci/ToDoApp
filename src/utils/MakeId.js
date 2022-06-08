@@ -4,6 +4,7 @@
  * @returns {string}
  * @constructor
  */
+// Oluşturulan işlere random ID atmamıza yarayan yapıcı metot.
 const MakeId = (length = 8) => {
     let result = ''
         , characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'

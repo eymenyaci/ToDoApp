@@ -12,6 +12,12 @@ function MainContext() {
     const [filterDate, setFilterDate] = useState(null);
     const [selectedFilter, setSelectedFilter] = useState(0);
 
+    /**
+     * Status:1 olarak yani Yapılacak İşler olarak AddForm fonksiyonundan 
+     * gelen değerler ile değerleri React ın UseState kütüphanesinin
+     * yardımı ile listemize ekliyoruz. Bu işlemi yaparken değerlerin
+     * null olup olmadığını kontrol ediyoruz.
+     **/
     const addTodo = () => {
         const newTodo = {
             id: MakeId(),
@@ -29,12 +35,16 @@ function MainContext() {
             alert("Tarih belirtiniz!");
             return;
         }
-        console.log(newTodo);
         setTodos([...todos, newTodo]);
         setTodo("");
         setDate("");
     }
 
+
+
+    /**
+     * todoNotFound fonksiyonu ile iş adetini alıyoruz.
+     */
     const todoNotFound = () => todos.filter(todo => {
         if (todo.deleted === 0 && todo.removed === 0)
             return true;
@@ -45,6 +55,10 @@ function MainContext() {
      *
      * @param _t
      * @param status
+     *  prompt ile güncellenecek değer newValue değişkenine atanır.
+     *  Tıklanan işin id değeri clickedTodo değişkenine atanır.
+     *  Yeni girilen değerin null olması kontrol edilir.
+     *  Tıklanan işin değeri güncellenir.
      */
     const editTodo = (_t, status) => {
         let newValue = prompt('Bugün ne yapacaksın ?'),
@@ -68,6 +82,7 @@ function MainContext() {
     /**
      *
      * @param todoID
+     * Seçilen iş id değeri ile bulunur ve görünürlüğü kaldırılır.
      */
     const deleteTodo = (todoID) => {
         let clickedTodo = todos.find(todo => todo.id === todoID);
@@ -82,11 +97,13 @@ function MainContext() {
      *
      * @param _t
      * @param changeTo
+     * Seçilen iş bulunur. 
+     * Sonrasında seçilen işin yeni status değeri set edilir.
      */
     const changeStatus = (_t, changeTo) => {
         let clickedTodo = todos.find(todo => todo.id === _t.id);
 
-        setTodos([...todos, {
+        setTodos([...todos, { 
             id: MakeId(),
             status: changeTo,
             textContent: clickedTodo.textContent,
@@ -97,7 +114,11 @@ function MainContext() {
 
         clickedTodo.deleted = 1;
     }
-
+    /**
+     * handleFilterDate metotu bugün ve ileride seçilmiş tarih arasında bulunan gün
+     * farkını hesaplıyor. AddDay parametresiyle kaç günlük filtreleme yapacağımızı 
+     * belirtiyoruz.
+     */
     const handleFilterDate = (addDay) => {
         setSelectedFilter(addDay);
 
@@ -110,7 +131,10 @@ function MainContext() {
         const d = new Date(dateNow.setDate(dateNow.getDate() + addDay));
         setFilterDate(d);
     }
-
+    /**
+     * Hangi filtre seçildiyse işler o filtreye
+     * uygunluğuna göre gösterilir.
+     */
     const filterApply = (todoDate) => {
         if (filterDate === null)
             return true;
@@ -127,6 +151,7 @@ function MainContext() {
     return (
         <>
             <main className="main-container">
+
                 <AddForm todo={todo} setTodo={setTodo} date={date} setDate={setDate} addTodo={addTodo} />
 
                 {todos.length > 0 && todoNotFound() > 0 ? (
@@ -134,7 +159,7 @@ function MainContext() {
 
                         <div className="filter-btns">
                             <button type="button" onClick={() => handleFilterDate(null)} className={selectedFilter === null ? 'active' : ''}>Tümü</button>
-                            <button type="button" onClick={() => handleFilterDate(0)} className={selectedFilter === 0 ? 'active' : ''}>BuGün</button>
+                            <button type="button" onClick={() => handleFilterDate(0)} className={selectedFilter === 0 ? 'active' : ''}>Bugün</button>
                             <button type="button" onClick={() => handleFilterDate(7)} className={selectedFilter === 7 ? 'active' : ''}>Bu Hafta</button>
                             <button type="button" onClick={() => handleFilterDate(30)} className={selectedFilter === 30 ? 'active' : ''}>Bu Ay</button>
                             <button type="button" onClick={() => handleFilterDate(365)} className={selectedFilter === 365 ? 'active' : ''}>Bu Yıl</button>
