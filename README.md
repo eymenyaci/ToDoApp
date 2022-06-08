@@ -1,6 +1,6 @@
 ## Yapılacaklar Listesi (Web Programlama Ödevi)
 
-Yapılacak işler listesi oluşturabildiğimiz React uygulaması. Yaptığımız işleri yapıldı olarak işaretlediğimizde üstü çizili bir şekilde farklı listeye aktarılır.
+Yapılacak işler listesi oluşturabildiğimiz React uygulaması. Yapılacak işi belirtirken tarih seçebiliriz. Tarih seçildikten sonra tarihlere göre yapılacak işlerimizi filtreleyebiliriz. Yaptığımız işleri yapıldı olarak işaretlediğimizde üstü çizili bir şekilde farklı listeye aktarılır.
 
 ### Komutlar
 
